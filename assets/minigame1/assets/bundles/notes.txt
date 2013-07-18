@@ -1,0 +1,3 @@
+This folder will contain the bundle art assets and assetsManifest.xml.
+
+In a project with automated builds, you do not own this folder. The server will overwrite the contents as necessary including any manual changes you may make in the folder.

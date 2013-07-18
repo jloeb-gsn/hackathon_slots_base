@@ -1,0 +1,2 @@
+Include all of your FLA and XFL files in here. They can be organized in sub directories. They should publish to the assets/ directory at the root of the project.
+Use the external compiling task in the build.xml to compile all FLA/XFL files prior to publishing.

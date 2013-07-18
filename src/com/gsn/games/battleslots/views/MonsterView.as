@@ -1,0 +1,70 @@
+package com.gsn.games.battleslots.views {
+	
+	import com.gsn.games.battleslots.data.Monster;
+	import com.gsn.games.shared.assetsmanagement.AssetManager;
+	import com.gsn.games.shared.assetsmanagement.AssetVO;
+	import com.gsn.games.shared.ui.BaseView;
+	import com.gsn.games.shared.utils.DebugUtils;
+	
+	import flash.display.MovieClip;
+	import flash.display.Sprite;
+	import flash.text.TextField;
+	
+	public class MonsterView extends BaseView {
+		
+		protected var m_meter:Sprite;
+		protected var m_monsterImg:MovieClip;
+		
+		protected var health_tf:TextField;
+		protected var attack_tf:TextField;
+		protected var energy_tf:TextField;
+		protected var defense_tf:TextField;
+		protected var exp_tf:TextField;
+		
+		public function MonsterView() {
+			super();
+			initAssetLoads();
+		}
+		
+		protected function initAssetLoads():void {
+			
+			var v:Vector.<String> = new Vector.<String>();
+			v.push("PANEL_MonsterStats");
+			
+			AssetManager.instance.bulkRequest(v, onAssetsLoaded);
+		}
+		
+		protected function onAssetsLoaded(v:Vector.<AssetVO>):void {
+			for each (var vo:AssetVO in v) {
+				switch (vo.name) {
+					case "PANEL_MonsterStats":
+						m_meter = vo.asset as Sprite;
+						break;
+				}
+			}
+			buildPanelContents();
+		}
+		
+		protected function buildPanelContents():void {
+			DebugUtils.log("Building panel");
+			//set up bouncing monster image
+			m_monsterImg = (m_meter.getChildByName("MC_monster") as MovieClip);
+			m_monsterImg.play();
+			//set up stats text
+			health_tf = (m_meter.getChildByName("TF_health") as TextField);
+			attack_tf = (m_meter.getChildByName("TF_attack") as TextField);
+			energy_tf = (m_meter.getChildByName("TF_energy") as TextField);
+			exp_tf =	(m_meter.getChildByName("TF_xp") as TextField);
+			defense_tf= (m_meter.getChildByName("TF_defense") as TextField);
+			addChild(m_meter);
+		}
+		
+		public function setMonsterData(monst:Monster):void {
+			health_tf.text = "HP: "+monst.getTotalStat(Monster.HEALTH);
+			attack_tf.text = "Attack: "+monst.getTotalStat(Monster.ATTACK);
+			energy_tf.text = "Energy: "+monst.getTotalStat(Monster.ENERGY);
+			defense_tf.text = "Defense: "+monst.getTotalStat(Monster.DEFENSE);
+			exp_tf.text = "XP: "+monst.xp+" (level "+monst.getLevel()+")";
+		}
+	}
+}

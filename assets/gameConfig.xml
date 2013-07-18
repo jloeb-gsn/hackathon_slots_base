@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<data>
+
+    <!-- The mainQueue includes everything that must load before the player can take any actions. -->
+    <LoaderMax name="mainQueue" prependURLs="" load="true">
+        <!-- <SWFLoader url="WofSlotsApp.swf" name="appSwf" autoPlay="false" load="false" context="own" /> -->
+        <!--  <SWFLoader url="display.swf" name="displaySwf" autoPlay="false" load="false" context="own" eventType="displaySwfComplete" />  -->
+        <MP3Loader url="sounds/click_02.mp3" name="ClickSnd" load="false" autoPlay="false" type="SFX"/>
+        <MP3Loader url="sounds/spin_01.mp3" name="SpinSnd" load="false" autoPlay="false" type="SFX"/>
+        <MP3Loader url="sounds/stop_03.mp3" name="SpinStopSnd" load="false" autoPlay="false" type="SFX"/>
+        <MP3Loader url="sounds/tokens_03.mp3" name="BalanceSnd" load="false" autoPlay="false" type="SFX"/>
+        <MP3Loader url="sounds/WofIntroClapping.mp3" name="IntroSnd" load="false" autoPlay="false" type="SFX" eventType="introSoundComplete"/>
+        <MP3Loader url="sounds/beginpuzzle.mp3" name="BeginPuzzleSnd" load="false" autoPlay="false" type="SFX"/>
+        <MP3Loader url="sounds/WofFanfare.mp3" name="FanfareSnd" load="false" autoPlay="false" type="SFX"/>
+        <MP3Loader url="sounds/scatterbonus_01a.mp3" name="Scatter1Snd" load="false" autoPlay="false" type="SFX"/>
+        <MP3Loader url="sounds/scatterbonus_01b.mp3" name="Scatter2Snd" load="false" autoPlay="false" type="SFX"/>
+        <MP3Loader url="sounds/scatterbonus_01c.mp3" name="Scatter3Snd" load="false" autoPlay="false" type="SFX"/>
+        <MP3Loader url="sounds/scatterbonus_01d4.mp3" name="Scatter4Snd" load="false" autoPlay="false" type="SFX"/>
+        <MP3Loader url="sounds/correctletter.mp3" name="CorrectLetterSnd" load="false" autoPlay="false" type="SFX"/>
+        <MP3Loader url="sounds/anticipation.mp3" name="AnticipationSnd" load="false" autoPlay="false" type="SFX"/>
+    </LoaderMax>
+
+    <!-- Anything in the slowQueue can be loaded after the game begins. -->
+    <LoaderMax name="slowQueue" prependURLs="" load="false" postLoad="true">
+        <MP3Loader url="sounds/scatterbonus_02c.mp3" name="EnvelopeSnd" load="false" autoPlay="false" type="SFX"/>
+        <MP3Loader url="sounds/prize_03.mp3" name="EnvelopeOpenSnd" load="false" autoPlay="false" type="SFX"/>
+        <MP3Loader url="sounds/wheel_spin_long.mp3" name="WheelSnd" load="false" autoPlay="false" type="SFX"/>
+        <MP3Loader url="sounds/prize_05.mp3" name="FreePlaySnd" load="false" autoPlay="false" type="SFX"/>
+        <MP3Loader url="sounds/Chicago.mp3" name="ChicagoSnd" load="false" autoPlay="false" type="SFX"/>
+        <MP3Loader url="sounds/Honolulu.mp3" name="HonoluluSnd" load="false" autoPlay="false" type="SFX"/>
+        <MP3Loader url="sounds/LasVegas.mp3" name="LasVegasSnd" load="false" autoPlay="false" type="SFX"/>
+        <MP3Loader url="sounds/NewOrleans.mp3" name="NewOrleansSnd" load="false" autoPlay="false" type="SFX"/>
+        <MP3Loader url="sounds/NewYorkCity.mp3" name="NewYorkCitySnd" load="false" autoPlay="false" type="SFX"/>
+        <MP3Loader url="sounds/SanFrancisco.mp3" name="SanFranciscoSnd" load="false" autoPlay="false" type="SFX"/>
+        <MP3Loader url="sounds/WofPuzzleSolved.mp3" name="PuzzleSolvedSnd" load="false" autoPlay="false" type="SFX"/>
+        <MP3Loader url="sounds/cheer_short.mp3" name="CheerShortSnd" load="false" autoPlay="false" type="SFX"/>
+        <MP3Loader url="sounds/aww.mp3" name="AwwSnd" load="false" autoPlay="false" type="SFX"/>
+        <MP3Loader url="sounds/fireworks_sm.mp3" name="FireworksSnd" load="false" autoPlay="false" type="SFX"/>
+    </LoaderMax>
+    
+        <!-- BackgroundBundle -->
+    <LoaderMax name="Background" prependURLs="" load="true">
+        <SWFLoader url="BackgroundBundle.swf" name="BackgroundBundle" autoPlay="false" load="false" />
+    </LoaderMax>
+    <library bundle="BackgroundBundle">
+        <element id="PANEL_Bg"          classname="PANEL_Bg"        type="" />
+        <!--  element id="GFX_VectorCircle"  classname="GFX_VectorCircle" type="" /-->
+        <element id="GFX_FreeSpinTint"  classname="GFX_FreeSpinTint" type="" />
+    </library>
+
+        <!-- BackgroundBundle High Res -->
+    <LoaderMax name="BackgroundHR" prependURLs="" load="false" postLoad="false">
+        <SWFLoader url="BackgroundBundleHR.swf" name="BackgroundBundleHR" autoPlay="false" load="false" />
+    </LoaderMax>
+    <library bundle="BackgroundBundleHR">
+        <element id="PANEL_BgHR"          classname="PANEL_BgHR"        type="PANEL" />
+    </library>
+
+    <LoaderMax name="Foreground" prependURLs="" load="true">
+        <SWFLoader url="ForegroundBundle.swf" name="ForegroundBundle" autoPlay="false" load="false" />
+    </LoaderMax>
+
+    <library bundle="ForegroundBundle">
+        <element id="FLA_ReelLattice" classname="FLA_ReelLattice" type="GFX" />
+    </library>
+
+    <LoaderMax name="Paytable" prependURLs="" load="true">
+        <SWFLoader url="PaytableBundle.swf" name="PaytableBundle" autoPlay="false" load="false" />
+    </LoaderMax>
+
+    <library bundle="PaytableBundle">
+        <element id="FLA_PayTableDialog" classname="FLA_PayTableDialog" type="GFX" />
+        <element id="FLA_PayTableOverBg" classname="FLA_PayTableOverBg" type="GFX" />
+    </library>
+    
+    <LoaderMax name="Meter" prependURLs="" load="true">
+        <SWFLoader url="Meter.swf" name="MeterBundle" autoPlay="false" load="false" />
+    </LoaderMax>
+    <library bundle="MeterBundle">
+        <element id="PANEL_MonsterStats" className="PANEL_MonsterStats" type="GFX" />
+    </library>
+
+    <LoaderMax name="SlotAssets" prependURLs="" load="true">
+        <SWFLoader url="SlotBundle.swf" name="SlotBundle" autoPlay="false" load="false" />
+    </LoaderMax>
+
+    <library bundle="SlotBundle">
+        <element id="LogoMedallion" classname="LogoMedallion" type="GFX" />
+        <element id="FLA_VolumeButton" classname="FLA_VolumeButton" type="GFX" />
+        <element id="FLA_PaylineArea" classname="FLA_PaylineArea" type="GFX" />
+        <element id="FLA_WinStarburst" classname="FLA_WinStarburst" type="GFX" />
+        <element id="FLA_SpinButton" classname="FLA_SpinButton" type="GFX" />
+        <element id="FLA_PayTableButton" classname="FLA_PayTableButton" type="GFX" />
+        <element id="FLA_FullScreenButton" classname="FLA_FullScreenButton" type="GFX" />
+        <element id="FLA_CashOutButton" classname="FLA_CashOutButton" type="GFX" />
+        <element id="FLA_AutoQtyMask" classname="FLA_AutoQtyMask" type="GFX" />
+        <element id="FLA_AutoQtyButton" classname="FLA_AutoQtyButton" type="GFX" />
+        <element id="FLA_AutoOnButton" classname="FLA_AutoOnButton" type="GFX" />
+        <element id="FLA_AutoOffButton" classname="FLA_AutoOffButton" type="GFX" />
+        <element id="FLA_IconA" classname="FLA_IconA" type="GFX" />
+        <element id="FLA_IconB" classname="FLA_IconB" type="GFX" />
+        <element id="FLA_IconC" classname="FLA_IconC" type="GFX" />
+        <element id="FLA_IconD" classname="FLA_IconD" type="GFX" />
+        <element id="FLA_IconE" classname="FLA_IconE" type="GFX" />
+        <element id="FLA_IconF" classname="FLA_IconF" type="GFX" />
+        <element id="FLA_IconJ" classname="FLA_IconJ" type="GFX" />
+        <element id="FLA_IconS" classname="FLA_IconS" type="GFX" />
+        <element id="FLA_IconM" classname="FLA_IconM" type="GFX" />
+        <element id="FLA_IconW" classname="FLA_IconW" type="GFX" />
+        <element id="FLA_Icon2W" classname="FLA_Icon2W" type="GFX" />
+        <element id="FLA_ReelArea" classname="FLA_ReelArea" type="GFX" />
+        <element id="FLA_Fireworks" classname="FLA_Fireworks" type="ANIM" />
+        <element id="FLA_MessageArea" classname="FLA_MessageArea" type="GFX" />
+        <element id="FLA_LineIndicator" classname="FLA_LineIndicator" type="GFX" />
+        
+    </library>
+
+    <LoaderMax name="Tutorials" prependURLs="" load="true">
+        <SWFLoader url="TutorialsBundle.swf" name="TutorialsBundle" autoPlay="false" load="false" />
+    </LoaderMax>
+
+    <library bundle="TutorialsBundle">
+        <element id="BtnClose" classname="BtnClose" type="BTN" />
+        <element id="GFXTutorialBg" classname="GFXTutorialBg" type="GFX" />
+        <element id="GFXTutorialMiddle" classname="GFXTutorialMiddle" type="GFX" />
+        <element id="ClickBgMask" classname="ClickBgMask" type="GFX" />
+        <element id="ClickBg" classname="ClickBg" type="GFX" />
+        <element id="BTN_continue" classname="BTN_continue" type="BTN" />
+        <element id="PANEL_TutorialScreen2" classname="PANEL_TutorialScreen2" type="PANEL" />
+        <element id="PANEL_TutorialClickToSpin" classname="PANEL_TutorialClickToSpin" type="PANEL" />
+        <element id="PanelTutorialYouWin" classname="PanelTutorialYouWin" type="PANEL" />
+        <element id="PanelTutorialNiceWin" classname="PanelTutorialNiceWin" type="PANEL" />
+    </library>
+
+     <!-- GuiBundle -->
+     <LoaderMax name="GuiBundleLoader" prependURLs="" load="true">
+        <SWFLoader url="GuiBundle.swf" name="GuiBundle" load="true" postLoad="false"/>
+    </LoaderMax>
+    <library bundle="GuiBundle">
+        <element id="ANIM_GuiCoins" classname="ANIM_GuiCoins" type="" />
+        <element id="BTN_decrease" classname="BTN_decrease" type="" />
+        <element id="BTN_increase" classname="BTN_increase" type="" />
+        <element id="BTN_InviteFriends" classname="BTN_InviteFriends" type="" />
+        <element id="GFX_readout" classname="GFX_readout" type="" />
+        <element id="PANEL_bets" classname="PANEL_bets" type="" />
+        <element id="PANEL_InviteFriendsButton" classname="PANEL_InviteFriendsButton" type="" />
+        <element id="PANEL_tokenbalance" classname="PANEL_tokenbalance" type="" />
+    </library>
+
+
+
+    <!-- PopupBundle -->
+    <LoaderMax name="PopupBundleLoader" prependURLs="" load="false" postLoad="true">
+        <SWFLoader url="PopupBundle.swf" name="PopupBundle" load="false" postLoad="true" />
+    </LoaderMax>
+    <library bundle="PopupBundle" >
+        <element id="BTN_Popup_BackToGame"  classname="BTN_Popup_BackToGame" type="" />
+        <element id="BTN_Popup_Reload"  	classname="BTN_Popup_Reload"	type="" />
+        <element id="BTN_Popup_BuyAnotherSpin"  classname="BTN_Popup_BuyAnotherSpin" type="" />
+        <element id="BTN_closeGlow"         classname="BTN_closeGlow"       type="" />
+        <element id="BTN_AcceptButton"      classname="BTN_AcceptButton"    type="" />
+        <element id="BTN_CancelButton"      classname="BTN_CancelButton"    type="" />
+        <element id="BTN_greenbarsmall"     classname="BTN_greenbarsmall"   type="" />
+        <element id="GFX_smallball_gold"    classname="GFX_smallball_gold"  type="" />
+        <element id="GFX_coin"              classname="GFX_coin"            type="" />
+        <element id="GFX_Checkbox"          classname="GFX_Checkbox"        type="" />
+        <element id="GFX_fbcredit"     		classname="GFX_fbcredit"   		type="" />
+        <element id="GFX_freeplaybonus"     classname="GFX_freeplaybonus"   type="" />
+        <element id="GFX_SingleCoin"        classname="GFX_SingleCoin"      type="" />
+        <element id="GFX_SummaryBg"         classname="GFX_SummaryBg"       type="" />
+        <element id="GFX_ShareLogo"         classname="GFX_ShareLogo"       type="" />
+        <element id="GFX_ScrollBar"   		classname="GFX_ScrollBar"       type="" />
+        <element id="GFX_wheelspinbonus"    classname="GFX_wheelspinbonus"  type="" />
+        <element id="PANEL_BadgePanel"      classname="PANEL_BadgePanel"    type="" />
+        <element id="PANEL_BigWinPopup"     classname="PANEL_BigWinPopup"   type="" />
+        <element id="PANEL_ErrorDialog"     classname="PANEL_ErrorDialog"   type="" />
+        <element id="PANEL_ShareCheckbox"   classname="PANEL_ShareCheckbox" type="" />
+        <element id="PANEL_SummaryPanel"    classname="PANEL_SummaryPanel"  type="" />
+        <element id="PANEL_TokenDisplay"    classname="PANEL_TokenDisplay"  type="" />
+        <element id="PANEL_FreeSpinSummary" classname="PANEL_FreeSpinSummary" type="" />
+        <element id="PANEL_CityWheelRollover"   		classname="PANEL_CityWheelRollover" 		type="" />
+        <element id="PANEL_IncentiveSharePopup"         classname="PANEL_IncentiveSharePopup"       type="" />
+        <element id="PANEL_WheelUpgradeInBonusSpin"     classname="PANEL_WheelUpgradeInBonusSpin"   type="" />
+        <element id="PANEL_Collection_FirstItemPopup"   classname="PANEL_Collection_FirstItemPopup" type="" />
+        <element id="PANEL_PurchaseTokensPanel"   		classname="PANEL_PurchaseTokensPanel" 		type="" />
+        <element id="PANEL_TokenPrice"   				classname="PANEL_TokenPrice" 				type="" />
+        <element id="PANEL_CityWheelRollover"   		classname="PANEL_CityWheelRollover" 		type="" />
+    </library>
+
+    <!-- SnapshotCohort -->
+    <!-- 
+    <LoaderMax name="SnapshotCohortLoader" prependURLs="" load="true">
+        <SWFLoader url="SnapshotCohort.swf" name="SnapshotCohort" load="true" postLoad="false" />
+    </LoaderMax>
+    <library bundle="SnapshotCohort" >
+        <element id="BTN_photo" classname="BTN_photo" type="" />
+        <element id="BTN_share" classname="BTN_share" type="" />
+        <element id="GFX_bluedialog" classname="GFX_bluedialog" type="" />
+        <element id="GFX_bragtxt" classname="GFX_bragtxt" type="" />
+        <element id="GFX_golddialog" classname="GFX_golddialog" type="" />
+        <element id="GFX_picturebox" classname="GFX_picturebox" type="" />
+        <element id="PANEL_shareWin" classname="PANEL_shareWin" type="" />
+        <element id="PANEL_photoButton" classname="PANEL_photoButton" type="" />
+    </library>
+     -->
+
+    <!-- Game-specific configuration data -->
+    <ConfigData>
+        <gameId>430</gameId>
+        <version>300</version>
+        <minBadgeId>730</minBadgeId>
+        <maxBadgeId>730</maxBadgeId>
+        <badgeConfig>
+        	<badge id="720" name="highroller" type="tokensWon" value="1000000"/>
+        </badgeConfig>
+    </ConfigData>
+</data>

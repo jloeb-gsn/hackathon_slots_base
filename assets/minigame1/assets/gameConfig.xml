@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<data>
+
+    <!-- Game-specific configuration data -->
+    <ConfigData>
+        <minBadgeId>0</minBadgeId>
+        <maxBadgeId>1000</maxBadgeId>
+    </ConfigData>
+    
+    <!-- Sound files -->
+    <!--
+    <LoaderMax name="music" prependURLs="" load="false" postLoad="false">
+        <MP3Loader url="sounds/CasinoMusic1.mp3" name="myMusic" load="false" autoPlay="false" type="MUSIC"/>
+    </LoaderMax>
+    <LoaderMax name="sounds" prependURLs="" load="false" postLoad="false">
+        <MP3Loader url="sounds/effects/aww.mp3" name="mySound" load="false" autoPlay="false" type="SFX"/>
+    </LoaderMax>
+    -->
+
+    <!-- Assets bundles -->
+<!--      <SWFLoader url="bundles/DoorsMinigameBundle.swf" name="DoorsMinigameBundle" load="true" postLoad="false" eventType="GameBundleLoaded"/>
+    <library bundle="DoorsMinigameBundle">
+        <element id="PANEL_MyPanel" classname="PANEL_MyPanel" type="PANEL"/>
+        <element id="GFX_minigame_bg" classname="GFX_minigame_bg" type="PANEL"/>
+        <element id="GFX_minigame_door" classname="GFX_minigame_door" type="PANEL"/>
+    </library> -->
+    
+    <SWFLoader url="MySoundAssets.swf" name="SoundBundle" load="false" postLoad="true" eventType="SoundBundleLoaded"/>
+    <library bundle="SoundBundle">
+        <element id="minigame_reveal" classname="minigame_reveal" type="SOUND"/>
+    </library>
+    
+</data>

@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project name="WOF3 Project builder" default="buildDebug">
+	
+	<!-- include project properties (overrides values below) -->
+	<property file="build.properties"/>
+	
+	
+	<!-- Default values -->
+	<property name="package" value="${basedir}/src/com/gsn/games/mygame" />
+	<property name="appName" value="my_app" />
+	<property name="appClass" value="${package}/${appName}.as" />
+	<property name="appSwfFile" value="${appName}.swf" />
+	<property name="appTitle" value="Project template" />
+	<!--<property name="appHtmlFile" value="${appName}.html" />-->
+	<property name="loaderName" value="GameLoader" />
+	<property name="loaderClass" value="${package}/${loaderName}.as" />
+	<property name="loaderSwfFile" value="${loaderName}.swf" />
+	<property name="loaderHtmlFile" value="${loaderName}.html" />
+	<property name="progressBarName" value="ProgressBar" /> 
+	<property name="progressBarSwfFile" value="${progressBarName}.swf" />
+	<property name="appWidth" value="760" />
+	<property name="appHeight" value="680" />
+	<property name="frameRate" value="30" />
+	<property name="bgColor" value="FFFFFF" />
+	<property name="flashVars" value="" />
+	<property name="version-major" value="11" />
+	<property name="version-minor" value="1" />
+	<property name="version-revision" value="0" />
+	
+	<!-- other values -->
+	<property name="buildDirDebug" value="${basedir}/bin-debug" />
+	<property name="buildDirRelease" value="${basedir}/bin-release" />
+
+	<property name="assetsDir" value="${basedir}/assets" />
+	<property name="assetsSrc" value="${basedir}/assets-src"/>
+	<property name="distributeDir" value="distribute" />
+	<property name="compilerJSFL" value="${basedir}/compiler.jsfl"/>
+	<property name="tempCompilerJSFL" value="${basedir}/temp_compiler.jsfl"/>
+
+	<property name="fbHome" value="/Applications/Adobe Flash Builder 4.6" />
+	<property name="flexHome" value="${fbHome}/sdks/4.6.0" />
+	<property name="FLEX_HOME" value="${flexHome}" />
+	<taskdef resource="flexTasks.tasks" classpath="${flexHome}/ant/lib/flexTasks.jar"/>
+	
+	
+	<!-- Compile all external fla and xfl files -->
+	<target name="compileAllExternal" description="Compile all FLA/XFL files into /assets">
+
+		<!-- Get all files of type .fla or .xfl -->
+		<fileset dir="${assetsSrc}" id="extFiles">
+			<include name="**/*.fla"/>
+			<include name="**/*.xfl"/>
+		</fileset>
+
+		<!-- Convert to a string for JSFL -->
+		<pathconvert pathsep="," property="extFilesString" refid="extFiles"/>
+
+		<!-- Call the jsfl to compile the FLAs -->
+		<!-- Create temp -->
+		<copy file="${compilerJSFL}" tofile="${tempCompilerJSFL}" overwrite="true"/>
+		<!-- Pass in vars -->
+		<replace file="${tempCompilerJSFL}" token="@fileList@" value="${extFilesString}"/>
+		<replace file="${tempCompilerJSFL}" token="@pubdir@" value="${assetsDir}/"/>
+
+		<!-- Execute JSFL -->
+		<exec executable="open" failonerror="true" dir=".">
+			<!-- Wait for task to complete -->
+			<arg value="-W"/>
+			<arg value="${tempCompilerJSFL}"/>
+		</exec>
+		
+		<!-- Delete temp JSFL -->
+		<delete file="${tempCompilerJSFL}"/>
+
+	</target>
+	
+	<!-- compile the main loader -->
+	<target name="build">
+		<fail message="Don't use this target directly! Use buildDebug or buildRelease" unless="buildDir" />
+		<echo>${loaderClass}</echo>
+		<!-- clean build dir -->
+		<delete quiet="true" includeemptydirs="true">
+			<fileset dir="${buildDir}"/>
+		</delete>
+		
+		<!-- copy assets -->
+		<copy todir="${buildDir}/assets">
+			<fileset dir="${assetsDir}" />
+		</copy>
+		<!-- generate loader class -->
+		<antcall target="updateLoaderMetatag"/>
+		<mxmlc file="${loaderClass}" output="${buildDir}/build_${loaderSwfFile}" debug="${isDebug}" incremental="false">
+			<source-path path-element="src"/>
+			<compiler.library-path dir="${basedir}/libs/" append="true">
+				<include name="*"/>
+				<exclude name="**/*debug*" unless="${isDebug}"/>
+			</compiler.library-path>
+			<define name="CONFIG::DEBUG" value="${isDebug}"/>
+			<!-- ## needed? -->
+			<define name="CONFIG::ANALYTICS" value="true"/>
+		</mxmlc>
+		<!-- we use the build_ name to avoid Flash Builder cache when dependency checking-->
+		<copy file="${buildDir}/build_${loaderSwfFile}" tofile="${buildDir}/${loaderSwfFile}" overwrite="true"/>
+		<delete file="${buildDir}/build_${loaderSwfFile}"/>
+		
+		<!-- generate main class -->
+		<mxmlc file="${appClass}" output="${buildDir}/build_${appSwfFile}" debug="${isDebug}" incremental="false">
+			<source-path path-element="src"/>
+			<compiler.library-path dir="${basedir}/libs/" append="true">
+				<include name="*"/>
+				<exclude name="**/*debug*" unless="${isDebug}"/>
+			</compiler.library-path>
+			<define name="CONFIG::DEBUG" value="${isDebug}"/>
+			<!-- ## needed? -->
+			<define name="CONFIG::ANALYTICS" value="true"/>
+		</mxmlc>
+		<!-- we use the build_ name to avoid Flash Builder cache when dependency checking-->
+		<copy file="${buildDir}/build_${appSwfFile}" tofile="${buildDir}/${appSwfFile}" overwrite="true"/>
+		<delete file="${buildDir}/build_${appSwfFile}"/>
+
+	</target>
+
+	<!-- generate the wrapper html for the loader -->
+	<target name="wrapper">
+		<html-wrapper title="${appTitle}" file="${loaderName}.html" height="${appHeight}" width="${appWidth}" bgcolor="${bgColor}" application="app" swf="${loaderName}" output="${buildDir}" version-major="${version-major}" version-minor="${version-minor}" version-revision="${version-revision}"/>
+
+
+		<!-- add user's flashvars -->
+		<replaceregexp file="${buildDir}/${loaderHtmlFile}"
+			match="var flashvars = \{\};"
+			replace='var flashvars = {${flashVars}};'/>
+	</target>
+
+	<!-- update the metatags in the loader swf -->
+	<target name="updateLoaderMetatag">
+		<replaceregexp>
+			<regexp pattern="\[SWF\(.*\)\]" />
+			<substitution expression='[SWF(width="${appWidth}", height="${appHeight}", framerate="${frameRate}", backgroundColor="#${bgColor}")]' />
+			<fileset dir="${package}">
+				<include name="${loaderName}.as" />
+			</fileset>
+		</replaceregexp>
+		<replaceregexp>
+			<regexp pattern="\[appPathDefinition\(.*\)\]" />
+			<substitution expression='[appPathDefinition(pathName="${appSwfFile}")]' />
+			<fileset dir="${package}">
+				<include name="${loaderName}.as" />
+			</fileset>
+		</replaceregexp>
+		<replaceregexp>
+			<regexp pattern="\[progressPathDefinition\(.*\)\]" />
+			<substitution expression='[progressPathDefinition(pathName="${progressBarSwfFile}")]' />
+			<fileset dir="${package}">
+				<include name="${loaderName}.as" />
+			</fileset>
+		</replaceregexp>
+		<replaceregexp>
+			<regexp pattern="\[SWF\(.*\)\]" />
+			<substitution expression='[SWF(width="${appWidth}", height="${appHeight}", framerate="${frameRate}", backgroundColor="#${bgColor}")]' />
+			<fileset dir="${package}">
+				<include name="${appName}.as" />
+			</fileset>
+		</replaceregexp>
+	</target>
+
+	<!-- Clean out the bin-debug and bin-release folders -->
+	<target name="cleanAll" description="Clean bin-debug and bin-release">
+		<delete quiet="true" includeemptydirs="true">
+			<fileset dir="${buildDirDebug}"/>
+		</delete>
+		<delete quiet="true" includeemptydirs="true">
+			<fileset dir="${buildDirRelease}"/>
+		</delete>
+	</target>
+
+	<!-- Zip the files in bin-debug -->
+	<target name="zipBinDebug" depends="buildDebug" description="Builds the bin-debug contents, then zips the required files">
+		<mkdir dir="${distributeDir}" />
+		<!-- Time stamp the file name -->
+		<tstamp>
+			<format property="zip_time" pattern="yyyy-MM-dd'T'HH_mm_ss"/>
+		</tstamp>
+		<echo>time: ${zip_time}</echo>
+		<zip destfile="${distributeDir}/${appName}-debug-${zip_time}.zip" update="true">
+			<zipfileset dir="${buildDirDebug}/assets" prefix="assets">
+			</zipfileset>
+			<fileset dir="${buildDirDebug}">
+				<include name="${appSwfFile}" />
+				<include name="${loaderSwfFile}" />
+			</fileset>
+		</zip>
+	</target>
+	
+	<!-- Zip the files in bin-release -->
+	<target name="zipBinRelease" depends="buildRelease" description="Builds the bin-release contents, then zips the required files">
+		<mkdir dir="${distributeDir}" />
+		<!-- Time stamp the file name -->
+		<tstamp>
+			<format property="zip_time" pattern="yyyy-MM-dd'T'HH_mm_ss"/>
+		</tstamp>
+		<echo>time: ${zip_time}</echo>
+		<zip destfile="${distributeDir}/${appName}-release-${zip_time}.zip" update="true">
+			<zipfileset dir="${buildDirRelease}/assets" prefix="assets">
+			</zipfileset>
+			<fileset dir="${buildDirRelease}">
+				<include name="${appSwfFile}" />
+				<include name="${loaderSwfFile}" />
+			</fileset>
+		</zip>
+	</target>
+
+	<!-- Build the debug version -->
+	<target name="buildDebug" description="Build the debug version">
+		<antcall target="build">
+			<param name="buildDir" value="${buildDirDebug}" />
+			<param name="isDebug" value="true" />
+		</antcall>
+		<antcall target="wrapper">
+			<param name="buildDir" value="${buildDirDebug}" />
+		</antcall>
+	</target>
+	
+	<!-- Build the release version -->
+	<target name="buildRelease" description="Build the release version">
+		<antcall target="build">
+			<param name="buildDir" value="${buildDirRelease}" />
+			<param name="isDebug" value="false" />
+		</antcall>
+	</target>
+	
+</project>
