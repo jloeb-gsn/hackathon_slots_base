@@ -1,6 +1,7 @@
 package com.gsn.games.battleslots.views
 {
 	import com.gsn.games.battleslots.data.BattleSpinState;
+	import com.gsn.games.battleslots.data.Monster;
 	import com.gsn.games.battleslots.events.MonsterEvent;
 	import com.gsn.games.minigame.controllers.events.MinigameCompleteEvent;
 	import com.gsn.games.slots.events.GameEvent;
@@ -57,6 +58,7 @@ package com.gsn.games.battleslots.views
 			e.monster.addXP(e.amount);
 			(model.gameState.spinState as BattleSpinState).changeActiveMonster(e.monster);
 			dispatch(new GameEvent(GameEvent.SAVE_GAME_STATE));
+			view.bounceStat(Monster.XP, e.amount);
 			onMonsterChanged(e);
 		}
 		
@@ -64,6 +66,7 @@ package com.gsn.games.battleslots.views
 			e.monster.addBoostToStat(e.stat,e.amount);
 			(model.gameState.spinState as BattleSpinState).changeActiveMonster(e.monster);
 			dispatch(new GameEvent(GameEvent.SAVE_GAME_STATE));
+			view.bounceStat(e.stat, e.amount);
 			onMonsterChanged(e);
 		}
 		
@@ -71,6 +74,7 @@ package com.gsn.games.battleslots.views
 			e.monster.addPermanentStat(e.stat, e.amount);
 			(model.gameState.spinState as BattleSpinState).changeActiveMonster(e.monster);
 			dispatch(new GameEvent(GameEvent.SAVE_GAME_STATE)); 
+			view.bounceStat(e.stat, e.amount);
 			onMonsterChanged(e);
 		}
 	}

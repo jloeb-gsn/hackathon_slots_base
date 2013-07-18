@@ -14,6 +14,7 @@ package com.gsn.games.battleslots.views {
 		
 		protected var m_meter:Sprite;
 		protected var m_monsterImg:MovieClip;
+		protected var m_statAnim:MovieClip;
 		
 		protected var health_tf:TextField;
 		protected var attack_tf:TextField;
@@ -49,6 +50,9 @@ package com.gsn.games.battleslots.views {
 			DebugUtils.log("Building panel");
 			//set up bouncing monster image
 			m_monsterImg = (m_meter.getChildByName("MC_monster") as MovieClip);
+			m_statAnim = (m_meter.getChildByName("MC_statanim") as MovieClip);
+			m_statAnim.visible = false;
+			
 			m_monsterImg.play();
 			//set up stats text
 			health_tf = (m_meter.getChildByName("TF_health") as TextField);
@@ -65,6 +69,14 @@ package com.gsn.games.battleslots.views {
 			energy_tf.text = "Energy: "+monst.getTotalStat(Monster.ENERGY);
 			defense_tf.text = "Defense: "+monst.getTotalStat(Monster.DEFENSE);
 			exp_tf.text = "XP: "+monst.xp+" (level "+monst.getLevel()+")";
+		}
+		
+		public function bounceStat(stat:String, delta:int =1):void {
+			var mct:MovieClip = m_statAnim.getChildByName('MC_text') as MovieClip;
+			var tf:TextField = (mct.getChildByName('TF_statsinfo') as TextField);
+			tf.text = stat + " +" + delta;
+			m_statAnim.visible = true;
+			m_statAnim.gotoAndPlay(1);
 		}
 	}
 }
