@@ -8,13 +8,16 @@ package com.gsn.games.battleslots.views {
 	
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
+	import flash.events.TimerEvent;
 	import flash.text.TextField;
+	import flash.utils.Timer;
 	
 	public class MonsterView extends BaseView {
 		
 		protected var m_meter:Sprite;
 		protected var m_monsterImg:MovieClip;
 		protected var m_statAnim:MovieClip;
+		protected var m_bounceTimer:Timer;
 		
 		protected var health_tf:TextField;
 		protected var attack_tf:TextField;
@@ -25,6 +28,7 @@ package com.gsn.games.battleslots.views {
 		public function MonsterView() {
 			super();
 			initAssetLoads();
+			m_bounceTimer = new Timer(2000,0);
 		}
 		
 		protected function initAssetLoads():void {
@@ -77,6 +81,16 @@ package com.gsn.games.battleslots.views {
 			tf.text = stat + " +" + delta;
 			m_statAnim.visible = true;
 			m_statAnim.gotoAndPlay(1);
+			m_bounceTimer.addEventListener(TimerEvent.TIMER, onBounceTimer);
+			m_bounceTimer.start();
+		}
+		
+		protected function onBounceTimer(e:TimerEvent):void {
+			m_bounceTimer.stop();
+			m_bounceTimer.reset();
+			m_bounceTimer.removeEventListener(TimerEvent.TIMER, onBounceTimer);
+			m_statAnim.visible = false;
+			m_statAnim.stop();
 		}
 	}
 }
