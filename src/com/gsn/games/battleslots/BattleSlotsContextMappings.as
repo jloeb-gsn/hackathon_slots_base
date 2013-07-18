@@ -13,8 +13,12 @@ package com.gsn.games.battleslots {
 	import com.gsn.games.battleslots.models.SKSSlotsGameModel;
 	import com.gsn.games.battleslots.models.TutorialModel;
 	import com.gsn.games.battleslots.views.BackgroundMediator;
+	import com.gsn.games.battleslots.views.MonsterCollectionMediator;
+	import com.gsn.games.battleslots.views.MonsterCollectionView;
 	import com.gsn.games.battleslots.views.MonsterMediator;
 	import com.gsn.games.battleslots.views.MonsterView;
+	import com.gsn.games.battleslots.views.TrainerCardMediator;
+	import com.gsn.games.battleslots.views.TrainerCardView;
 	import com.gsn.games.battleslots.views.TutorialLayerMediator;
 	import com.gsn.games.battleslots.views.TutorialLayerView;
 	import com.gsn.games.battleslots.views.overrides.SKSBackgroundView;
@@ -84,6 +88,8 @@ package com.gsn.games.battleslots {
 			super.mediatorViewSetup();
 			m_context.contextMediatorMap.mapView(TutorialLayerView, TutorialLayerMediator);
 			m_context.contextMediatorMap.mapView(MonsterView, MonsterMediator);
+			m_context.contextMediatorMap.mapView(TrainerCardView, TrainerCardMediator);
+			m_context.contextMediatorMap.mapView(MonsterCollectionView, MonsterCollectionMediator);
 			//add other tutorial views here too
 		}
 		

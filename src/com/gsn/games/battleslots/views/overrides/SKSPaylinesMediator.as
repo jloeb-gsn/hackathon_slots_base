@@ -10,7 +10,7 @@ package com.gsn.games.battleslots.views.overrides {
 	
 	public class SKSPaylinesMediator extends PaylinesMediator {
 		public function SKSPaylinesMediator() { 
-			SlotEngineDefs.paylineMarkers_x = 185;
+			SlotEngineDefs.paylineMarkers_x = 168;
 			super(); 
 		}
 		

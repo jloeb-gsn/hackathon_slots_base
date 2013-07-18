@@ -3,8 +3,10 @@ package com.gsn.games.battleslots.views
 	import com.gsn.games.battleslots.data.BattleSpinState;
 	import com.gsn.games.battleslots.data.Monster;
 	import com.gsn.games.battleslots.events.MonsterEvent;
+	import com.gsn.games.battleslots.events.SKSSlotsDialogEvent;
 	import com.gsn.games.minigame.controllers.events.MinigameCompleteEvent;
 	import com.gsn.games.slots.events.GameEvent;
+	import com.gsn.games.slots.events.SlotsDialogEvent;
 	import com.gsn.games.slots.models.SlotModel;
 	
 	import flash.events.Event;
@@ -29,6 +31,12 @@ package com.gsn.games.battleslots.views
 			addContextListener(MonsterEvent.BOOST_STAT, onBoost);
 			addContextListener(MonsterEvent.ADD_XP, onXPGained);
 			addContextListener(MinigameCompleteEvent.COMPLETE, onMinigameComplete);
+			
+			addContextListener(SlotsDialogEvent.DIALOG_OPENED, onDialogOpen);
+			addContextListener(SlotsDialogEvent.DIALOG_CLOSED, onDialogClose);
+			
+			addViewListener(SKSSlotsDialogEvent.MONSTER_COLLECTION, dispatch);
+			addViewListener(SKSSlotsDialogEvent.TRAINER_CARD, dispatch);
 			super.onRegister();
 		}
 		
@@ -36,6 +44,11 @@ package com.gsn.games.battleslots.views
 			removeContextListener(MonsterEvent.SET_ACTIVE,onMonsterChanged);
 			removeContextListener(MonsterEvent.ADD_STAT, onAddStat);
 			removeContextListener(MonsterEvent.BOOST_STAT, onBoost);
+			removeContextListener(MonsterEvent.ADD_XP, onXPGained);
+			removeContextListener(MinigameCompleteEvent.COMPLETE, onMinigameComplete);
+			
+			removeViewListener(SKSSlotsDialogEvent.MONSTER_COLLECTION, dispatch);
+			removeViewListener(SKSSlotsDialogEvent.TRAINER_CARD, dispatch);
 			super.onRemove();
 		}
 		
@@ -48,6 +61,14 @@ package com.gsn.games.battleslots.views
 			(model.gameState.spinState as BattleSpinState).getActiveMonster().clearBoosts();
 			dispatch(new GameEvent(GameEvent.SAVE_GAME_STATE));
 			onMonsterChanged(new MonsterEvent(MonsterEvent.RESET_BOOSTS,(model.gameState.spinState as BattleSpinState).getActiveMonster()));
+		}
+		
+		protected function onDialogOpen(e:Event):void {
+			view.toggleButtons(false);
+		}
+		
+		protected function onDialogClose(e:Event):void {
+			view.toggleButtons(true);
 		}
 		
 		protected function onMonsterChanged(e:MonsterEvent):void {

@@ -8,6 +8,7 @@ package com.gsn.games.battleslots.views.overrides
 	import com.gsn.games.shared.utils.DebugUtils;
 	import com.gsn.games.slots.data.DataObject;
 	import com.gsn.games.slots.events.GameEvent;
+	import com.gsn.games.slots.events.SlotsDialogEvent;
 	import com.gsn.games.slots.views.mediators.MainMediator;
 	
 	import flash.events.Event;
@@ -46,6 +47,15 @@ package com.gsn.games.battleslots.views.overrides
 			tutorialModel.applyFlashVars(gameConfigManager.settings.extraFlashVars, playerMgr.settings.facebookUserId, Boolean(model.gameState.spinState.spinNumber < 20));	
 		}
 		
+		
+		/**
+		 * Fired when the view is removed from the stage.
+		 * Handle all cleanup of eventListeners here.
+		 * */
+		override public function onRemove():void {
+			removeContextListener(GameEvent.STEPS_COMPLETE, onStepsComplete);
+		}
+		
 		protected function onMonsterConfigured(e:Event):void {
 			var ss:BattleSpinState = (model.gameState.spinState) as BattleSpinState;
 			if (ss == null){
@@ -54,12 +64,14 @@ package com.gsn.games.battleslots.views.overrides
 			dispatch(new MonsterEvent(MonsterEvent.SET_ACTIVE, ss.getActiveMonster()));
 		}
 		
-		/**
-		 * Fired when the view is removed from the stage.
-		 * Handle all cleanup of eventListeners here.
-		 * */
-		override public function onRemove():void {
-			removeContextListener(GameEvent.STEPS_COMPLETE, onStepsComplete);
+		override protected function onDialogOpened(e:SlotsDialogEvent):void {
+			super.onDialogOpened(e);
+			//m_typeCastedView.showHideMonsterElem(false);
+		}
+		
+		override protected function onDialogClosed(e:SlotsDialogEvent):void {
+			super.onDialogClosed(e);
+			//m_typeCastedView.showHideMonsterElem(true);
 		}
 		
 		override protected function onResume(e:Event):void {

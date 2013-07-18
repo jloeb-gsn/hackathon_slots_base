@@ -79,6 +79,20 @@
     <library bundle="MeterBundle">
         <element id="PANEL_MonsterStats" className="PANEL_MonsterStats" type="GFX" />
     </library>
+    
+     <LoaderMax name="BattleDialogBundle" prependURLs="" load="true">
+        <SWFLoader url="BattleDialogs.swf" name="BattleDialogs" autoPlay="false" load="false" />
+    </LoaderMax>
+    <library bundle="BattleDialogs">
+        <element id="PANEL_MonsterColl" className="PANEL_MonsterColl" type="GFX" />
+    </library>
+    
+    <LoaderMax name="TrainerCardBundle" prependURLs="" load="true">
+        <SWFLoader url="Trainer_Card_V1.swf" name="TrainerCard" autoPlay="false" load="false" />
+    </LoaderMax>
+    <library bundle="TrainerCard">
+        <element id="PANEL_trainercard" className="PANEL_trainercard" type="GFX" />
+    </library>
 
     <LoaderMax name="SlotAssets" prependURLs="" load="true">
         <SWFLoader url="SlotBundle.swf" name="SlotBundle" autoPlay="false" load="false" />
@@ -155,6 +169,7 @@
     </LoaderMax>
     <library bundle="PopupBundle" >
         <element id="BTN_Popup_BackToGame"  classname="BTN_Popup_BackToGame" type="" />
+        <element id="BTN_Popup_Challenge"  classname="BTN_Popup_Challenge" type="" />
         <element id="BTN_Popup_Reload"  	classname="BTN_Popup_Reload"	type="" />
         <element id="BTN_Popup_BuyAnotherSpin"  classname="BTN_Popup_BuyAnotherSpin" type="" />
         <element id="BTN_closeGlow"         classname="BTN_closeGlow"       type="" />

@@ -3,11 +3,10 @@ package com.gsn.games.battleslots.events {
 	
 	public class SKSSlotsDialogEvent extends SlotsDialogEvent {
 		//Labels
-		public static var SHARE_WHEEL_WIN	:String = "shareWheelWin";
-		
-		//Types
-		public static const SHOW_WHEEL_SPIN_SUMMARY	:String	= "showWheelSpinSummary";
-		public static const WHEEL_MINI_GAME_SUMMARY_CLOSED:String = "wheelMiniGameSummaryClosed";
+		public static const TRAINER_CARD:String = "trainer_card_show";
+		public static const MONSTER_COLLECTION:String = "monster_collection_show";
+		public static const BUY_MONSTERS_DIALOG:String = "buy_monsters_show";
+		public static const CHALLENGE_FRIENDS:String = "challenge_friends";
 		
 		
 		public function SKSSlotsDialogEvent(type:String, label:String="") {

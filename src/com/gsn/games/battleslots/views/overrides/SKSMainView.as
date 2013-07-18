@@ -31,6 +31,8 @@ package com.gsn.games.battleslots.views.overrides {
         override protected function initialize(e:Event = null):void 
         {			
             super.initialize(e);
+			monsterView = new MonsterView();
+			layerManager.addChild(monsterView, LayerManager.FOREGROUND_LAYER);
             // Adding the logo
 			dispatchEvent(new GameEvent(MonsterEvent.SET_ACTIVE));
             layerManager.removeChild(logoView, LayerManager.FOREGROUND_LAYER);
@@ -44,8 +46,6 @@ package com.gsn.games.battleslots.views.overrides {
 			layerManager.addChild(dialogLayer, LayerManager.DIALOGS_LAYER);
 			gameUI = new SKSGameUIView();
 			layerManager.addChild(gameUI, LayerManager.GUI_LAYER);
-			monsterView = new MonsterView();
-			layerManager.addChild(monsterView, LayerManager.DIALOGS_LAYER);
 		}
 		
 		override protected function addBackground():void {
@@ -58,6 +58,11 @@ package com.gsn.games.battleslots.views.overrides {
 		 */
 		public function setInviteFriendsCohortFlag():void {
 			cohortInviteFriends = true;
+		}
+		
+		public function showHideMonsterElem(toggle:Boolean):void {
+			if (monsterView != null)
+				this.ShowHideView(monsterView,toggle, LayerManager.FOREGROUND_LAYER);
 		}
 		
 	}
