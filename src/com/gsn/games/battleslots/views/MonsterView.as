@@ -67,12 +67,12 @@ package com.gsn.games.battleslots.views {
 			addChild(m_meter);
 		}
 		
-		public function setMonsterData(monst:Monster):void {
-			health_tf.text = "HP: "+monst.getTotalStat(Monster.HEALTH);
-			attack_tf.text = "Attack: "+monst.getTotalStat(Monster.ATTACK);
-			energy_tf.text = "Energy: "+monst.getTotalStat(Monster.ENERGY);
-			defense_tf.text = "Defense: "+monst.getTotalStat(Monster.DEFENSE);
-			exp_tf.text = "XP: "+monst.xp+" (level "+monst.getLevel()+")";
+		public function setMonsterData(m:Monster):void {
+			health_tf.text = m.getTotalStat(Monster.HEALTH)+" ("+m.getBaseStat(Monster.HEALTH) + " + " + m.getBoostForStat(Monster.HEALTH)+")";
+			attack_tf.text = m.getTotalStat(Monster.ATTACK)+" ("+m.getBaseStat(Monster.ATTACK) + " + " + m.getBoostForStat(Monster.ATTACK)+")";
+			energy_tf.text = m.getTotalStat(Monster.ENERGY)+" ("+m.getBaseStat(Monster.ENERGY) + " + " + m.getBoostForStat(Monster.ENERGY)+")";
+			defense_tf.text = m.getTotalStat(Monster.DEFENSE)+" ("+m.getBaseStat(Monster.DEFENSE) + " + " + m.getBoostForStat(Monster.DEFENSE)+")";
+			exp_tf.text = m.xp+" (level "+m.getLevel()+")";
 		}
 		
 		public function bounceStat(stat:String, delta:int =1):void {
