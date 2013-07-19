@@ -17,6 +17,8 @@ package com.gsn.games.battleslots.views.overrides
 			m_typeCastView = view as SKSDialogLayerView;
 			addContextListener(SKSSlotsDialogEvent.MONSTER_COLLECTION, onMonsterCollection);
 			addContextListener(SKSSlotsDialogEvent.TRAINER_CARD, onTrainerCard);
+			addContextListener(SKSSlotsDialogEvent.OFFER_MONSTER_CHOICE, onChooseAMonster);
+			addContextListener(SKSSlotsDialogEvent.KEEP_MONSTER, onOfferMonsterToKeep);
 			super.onRegister();
 
 		}
@@ -28,11 +30,20 @@ package com.gsn.games.battleslots.views.overrides
 		}
 		
 		protected function onMonsterCollection(e:Event):void {
-			m_typeCastView.showHideMonsterCollection((model.gameState.spinState as BattleSpinState).getMonsters());
+			var bs:BattleSpinState = (model.gameState.spinState as BattleSpinState);
+			m_typeCastView.showHideMonsterCollection(bs.getMonsters(), bs.getActiveMonster());
 		}
 		
 		protected function onTrainerCard(e:Event):void {
-			m_typeCastView.showHideTrainerCard((model.gameState.spinState as BattleSpinState).getMonsters());
+			m_typeCastView.showHideTrainerCard((model.gameState.spinState as BattleSpinState).getActiveMonster());
+		}
+		
+		protected function onOfferMonsterToKeep(e:SKSSlotsDialogEvent):void {
+			
+		}
+		
+		protected function onChooseAMonster(e:SKSSlotsDialogEvent):void {
+			
 		}
 	}
 }

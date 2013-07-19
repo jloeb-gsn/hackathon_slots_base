@@ -63,7 +63,8 @@ package com.gsn.games.battleslots.views.overrides {
 				case SlotEngineDefs.FOUR_ICON_ES: //XP
 					stat = Monster.XP;
 					break;
-				case SlotEngineDefs.JACKPOT://new monster flow- short circuit the rest of this 
+				case SlotEngineDefs.FOUR_JACKPOTS://new monster flow- short circuit the rest of this 
+				case SlotEngineDefs.FIVE_JACKPOTS:
 					dispatch(new MonsterEvent(MonsterEvent.NEW_MONSTER,activeMonster,Monster.ID, amount));
 					return;
 			}

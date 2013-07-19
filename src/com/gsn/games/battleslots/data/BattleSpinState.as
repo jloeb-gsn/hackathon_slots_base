@@ -50,6 +50,35 @@ package com.gsn.games.battleslots.data {
 			m_monsterObjects.push(m2);
 		}
 		
+		public function chooseNewMonsters(amount:int):Array {
+			var result:Array = [];
+			var candidates:Array = [];
+			for (var idx:int=0; idx < MonsterConstants.monsters.length; idx++){
+				var isOwned:Boolean = false;
+				for (var i:int = 0; i < m_monsterObjects.length; i++){
+					if (MonsterConstants.monsters[idx] == m_monsterObjects[i]) {
+						isOwned = true;
+						break;
+					}
+				}
+				if (!isOwned){
+					candidates.push(MonsterConstants.monsters[idx]);
+				}
+			}
+			var maxIndex:int = candidates.length;
+			if (maxIndex == 0){
+				DebugUtils.log("USER OWNS ALL MONSTERS! UH OH...");
+			} else {
+				var rand:int;
+				for(var j:int = 0; j < amount; j++){
+					rand = Math.floor(Math.random()*candidates.length);
+					result.push(candidates[j]);
+				}
+			}
+			
+			return result;
+		}
+		
 		public override function setFromObject(obj:Object):void
 		{
 			if (!obj.hasOwnProperty("miniGameState")) {

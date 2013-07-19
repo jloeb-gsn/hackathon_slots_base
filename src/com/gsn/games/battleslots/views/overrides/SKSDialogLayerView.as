@@ -1,4 +1,5 @@
 package com.gsn.games.battleslots.views.overrides {
+	import com.gsn.games.battleslots.data.Monster;
 	import com.gsn.games.battleslots.views.MonsterCollectionView;
 	import com.gsn.games.battleslots.views.TrainerCardView;
 	import com.gsn.games.shared.utils.DebugUtils;
@@ -15,7 +16,7 @@ package com.gsn.games.battleslots.views.overrides {
 			super();
 		}
 		
-		public function showHideMonsterCollection(monsterList:Array):void {
+		public function showHideMonsterCollection(monsterList:Array, activeMonster:Monster):void {
 			
 			if (monsterCollections == null) {
 				monsterCollections = new MonsterCollectionView();
@@ -23,19 +24,19 @@ package com.gsn.games.battleslots.views.overrides {
 			}
 			var show:Boolean = !this.contains(monsterCollections);
 			if (show)
-				monsterCollections.initializeMonsterData(monsterList);
+				monsterCollections.initializeMonsterData(monsterList,activeMonster);
 			DebugUtils.log("showHideMonsterCollection : showing? "+show);
 			ShowHideView(monsterCollections, show);
 		}
 		
-		public function showHideTrainerCard(monsterList:Array):void {
+		public function showHideTrainerCard(activeMonster:Monster):void {
 			if (trainerCard == null) {
 				trainerCard = new TrainerCardView();
 				trainerCard.addEventListener(SlotsDialogEvent.DIALOG_CLOSED, onDialogClosed);
 			}
 			var show:Boolean = !this.contains(trainerCard);
 			if (show){
-				//do any initialization with data that needs to happen
+				trainerCard.setupPanel(activeMonster);
 			}
 			
 			ShowHideView(trainerCard, show);

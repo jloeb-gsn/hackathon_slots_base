@@ -93,6 +93,24 @@
     <library bundle="TrainerCard">
         <element id="PANEL_trainercard" className="PANEL_trainercard" type="GFX" />
     </library>
+    
+    <LoaderMax name="MonsterAssetsBundle" prependURLs="" load="true">
+        <SWFLoader url="Monsters.swf" name="MonsterAssets" autoPlay="false" load="false" />
+    </LoaderMax>
+    <library bundle="MonsterAssets">
+        <element id="MC_bulbasaur" className="MC_bulbasaur" type="GFX" />
+        <element id="MC_charizard" className="MC_charizard" type="GFX" />
+        <element id="MC_squirtle" className="MC_squirtle" type="GFX" />
+        <element id="MC_pikachu" className="MC_pikachu" type="GFX" />
+        <element id="MC_pidgey" className="MC_pidgey" type="GFX" />
+        <element id="MC_magikarp" className="MC_magikarp" type="GFX" />
+        <element id="MC_weedle" className="MC_weedle" type="GFX" />
+        <element id="MC_vulpix" className="MC_vulpix" type="GFX" />
+        <element id="MC_kadabra" className="MC_kadabra" type="GFX" />
+        <element id="MC_exeggutor" className="MC_exeggutor" type="GFX" />
+        <element id="MC_koffing" className="MC_koffing" type="GFX" />
+        <element id="MC_diglet" className="MC_diglet" type="GFX" />
+    </library>
 
     <LoaderMax name="SlotAssets" prependURLs="" load="true">
         <SWFLoader url="SlotBundle.swf" name="SlotBundle" autoPlay="false" load="false" />
@@ -126,7 +144,6 @@
         <element id="FLA_Fireworks" classname="FLA_Fireworks" type="ANIM" />
         <element id="FLA_MessageArea" classname="FLA_MessageArea" type="GFX" />
         <element id="FLA_LineIndicator" classname="FLA_LineIndicator" type="GFX" />
-        
     </library>
 
     <LoaderMax name="Tutorials" prependURLs="" load="true">

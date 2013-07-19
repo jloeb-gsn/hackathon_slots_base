@@ -14,6 +14,8 @@ package com.gsn.games.battleslots.events {
 		public static const LEVEL_UP:String = 'level_up';
 		public static const ADD_XP:String = 'xp_gained';
 		public static const NEW_MONSTER:String = 'new_monster';
+		public static const OFFER_MONSTER:String = 'offer_monster';
+		public static const CHOICE_OF_MONSTERS:String = 'offer_monster_choices';
 		
 		
 		//Event vars

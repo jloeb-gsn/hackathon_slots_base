@@ -1,5 +1,7 @@
 package com.gsn.games.battleslots.views
 {
+	import com.gsn.games.battleslots.data.Monster;
+	import com.gsn.games.battleslots.data.MonsterConstants;
 	import com.gsn.games.battleslots.events.SKSSlotsDialogEvent;
 	import com.gsn.games.shared.assetsmanagement.AssetManager;
 	import com.gsn.games.shared.assetsmanagement.AssetVO;
@@ -32,7 +34,10 @@ package com.gsn.games.battleslots.views
 			v.push("PANEL_trainercard");
 			v.push("BTN_Popup_BackToGame");
 			v.push("BTN_Popup_Challenge");
-		//	v.push("GFX_SummaryBg");
+			new MonsterConstants();
+			for (var idx:int = 0; idx < MonsterConstants.monsters.length; idx++){
+				v.push("MC_"+MonsterConstants.monsters[idx]);
+			}
 			AssetManager.instance.bulkRequest(v, onAssetsLoaded);
 		}
 		
@@ -47,6 +52,13 @@ package com.gsn.games.battleslots.views
 						break;
 					case "BTN_Popup_Challenge":
 						btn_challenge = vo.asset as MovieClip;
+						break;
+					default:
+						//assume it's a MC_pokemonName
+						var spl:Array = vo.name.split('_');
+						if (spl.length > 1){
+							MonsterConstants.monsterImageMap[spl[1]] = vo.asset as MovieClip;
+						}
 						break;
 				}
 			}
@@ -67,6 +79,11 @@ package com.gsn.games.battleslots.views
 			m_baseAsset.x = 230;
 			m_baseAsset.y = 150;
 			addChild(m_baseAsset);
+		}
+		
+		public function setupPanel(m:Monster):void {
+			var monsterName:String = m.name;
+			FlashUtils.swapSymbols("MC_monster", MonsterConstants.monsterImageMap[monsterName] as MovieClip, m_baseAsset);
 		}
 		
 		/**

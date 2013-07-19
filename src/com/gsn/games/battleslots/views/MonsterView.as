@@ -1,6 +1,7 @@
 package com.gsn.games.battleslots.views {
 	
 	import com.gsn.games.battleslots.data.Monster;
+	import com.gsn.games.battleslots.data.MonsterConstants;
 	import com.gsn.games.battleslots.events.MonsterEvent;
 	import com.gsn.games.battleslots.events.SKSSlotsDialogEvent;
 	import com.gsn.games.shared.assetsmanagement.AssetManager;
@@ -46,7 +47,10 @@ package com.gsn.games.battleslots.views {
 			
 			var v:Vector.<String> = new Vector.<String>();
 			v.push("PANEL_MonsterStats");
-			
+			new MonsterConstants();
+			for (var idx:int = 0; idx < MonsterConstants.monsters.length; idx++){
+				v.push("MC_"+MonsterConstants.monsters[idx]);
+			}
 			AssetManager.instance.bulkRequest(v, onAssetsLoaded);
 		}
 		
@@ -56,6 +60,13 @@ package com.gsn.games.battleslots.views {
 					case "PANEL_MonsterStats":
 						m_meter = vo.asset as Sprite;
 						break;
+					default:
+						//assume it's a MC_pokemonName
+						var spl:Array = vo.name.split('_');
+						if (spl.length > 1){
+							MonsterConstants.monsterImageMap[spl[1]] = vo.asset as MovieClip;
+						}
+						break;
 				}
 			}
 			buildPanelContents();
@@ -64,13 +75,12 @@ package com.gsn.games.battleslots.views {
 		protected function buildPanelContents():void {
 			DebugUtils.log("Building panel");
 			//set up bouncing monster image
-			m_monsterImg = (m_meter.getChildByName("MC_monster") as MovieClip);
+			m_monsterImg = (m_meter.getChildByName("MC_monster") as MovieClip).getChildByName('MC_monsterplaceholder') as MovieClip;
 			m_statAnim = (m_meter.getChildByName("MC_statanim") as MovieClip);
 			m_trainerCardMC = (m_meter.getChildByName("BTN_trainercard") as MovieClip);
 			m_myMonstersMC = (m_meter.getChildByName("BTN_mymonsters") as MovieClip);
 			m_statAnim.visible = false;
 			
-			m_monsterImg.play();
 			//set up stats text
 			health_tf = (m_meter.getChildByName("TF_health") as TextField);
 			attack_tf = (m_meter.getChildByName("TF_attack") as TextField);
@@ -108,6 +118,10 @@ package com.gsn.games.battleslots.views {
 		////// view functions called by mediator /////
 		
 		public function setMonsterData(m:Monster):void {
+			//MC_monster
+			m_monsterImg.removeChildren();
+			m_monsterImg.addChild(MonsterConstants.monsterImageMap[m.name] as MovieClip);
+			m_monsterImg.play();
 			health_tf.text = m.getTotalStat(Monster.HEALTH)+" ("+m.getBaseStat(Monster.HEALTH) + " + " + m.getBoostForStat(Monster.HEALTH)+")";
 			attack_tf.text = m.getTotalStat(Monster.ATTACK)+" ("+m.getBaseStat(Monster.ATTACK) + " + " + m.getBoostForStat(Monster.ATTACK)+")";
 			energy_tf.text = m.getTotalStat(Monster.ENERGY)+" ("+m.getBaseStat(Monster.ENERGY) + " + " + m.getBoostForStat(Monster.ENERGY)+")";

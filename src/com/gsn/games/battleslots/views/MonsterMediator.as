@@ -2,6 +2,7 @@ package com.gsn.games.battleslots.views
 {
 	import com.gsn.games.battleslots.data.BattleSpinState;
 	import com.gsn.games.battleslots.data.Monster;
+	import com.gsn.games.battleslots.data.MonsterConstants;
 	import com.gsn.games.battleslots.events.MonsterEvent;
 	import com.gsn.games.battleslots.events.SKSSlotsDialogEvent;
 	import com.gsn.games.minigame.controllers.events.MinigameCompleteEvent;
@@ -30,6 +31,8 @@ package com.gsn.games.battleslots.views
 			addContextListener(MonsterEvent.ADD_STAT, onAddStat);
 			addContextListener(MonsterEvent.BOOST_STAT, onBoost);
 			addContextListener(MonsterEvent.ADD_XP, onXPGained);
+			
+			addContextListener(MonsterEvent.NEW_MONSTER, onMonsterGained);
 			addContextListener(MinigameCompleteEvent.COMPLETE, onMinigameComplete);
 			
 			addContextListener(SlotsDialogEvent.DIALOG_OPENED, onDialogOpen);
@@ -97,6 +100,15 @@ package com.gsn.games.battleslots.views
 			dispatch(new GameEvent(GameEvent.SAVE_GAME_STATE)); 
 			view.bounceStat(e.stat, e.amount);
 			onMonsterChanged(e);
+		}
+		
+		protected function onMonsterGained(e:MonsterEvent):void {
+			var choices:Array = (model.gameState.spinState as BattleSpinState).chooseNewMonsters(e.amount);
+			if (choices.length == 1) {//if only one option, show the accept dialog
+				dispatch(new SKSSlotsDialogEvent(SKSSlotsDialogEvent.KEEP_MONSTER,'',choices));
+			} else { //if multiple choices, show the choose dialog
+				dispatch(new SKSSlotsDialogEvent(SKSSlotsDialogEvent.OFFER_MONSTER_CHOICE,'',choices));
+			}
 		}
 	}
 }
